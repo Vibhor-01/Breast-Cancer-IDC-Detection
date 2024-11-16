@@ -19,8 +19,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, TensorBoard, ModelCheckpoint
 
 # Loading the Images
-images=listdir(r"C:\Users\vibho\Documents\Visual studio code\DeepLearning\Project(Lung and Colon cancer detection)\IDC_regular_ps50_idx5")
-dir=r"C:\Users\vibho\Documents\Visual studio code\DeepLearning\Project(Lung and Colon cancer detection)\IDC_regular_ps50_idx5"
+images=listdir("IDC_regular_ps50_idx5")
+dir="IDC_regular_ps50_idx5"
 
 # Checking the Number of Images
 print(len(images))
