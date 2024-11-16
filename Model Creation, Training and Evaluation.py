@@ -18,6 +18,23 @@ from tensorflow.keras.layers import concatenate
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, TensorBoard, ModelCheckpoint
 
+# Data variables from Data Processing
+Non_cancer_train, Non_cancer_temp, Non_cancer_train_labels, Non_cancer_temp_labels=train_test_split(normalized_non_cancer, non_cancer_labels, test_size=0.3, stratify=non_cancer_labels, random_state=42)
+Cancer_train, Cancer_temp, Cancer_train_labels, Cancer_temp_labels=train_test_split(normalized_cancer, cancer_labels, test_size=0.3, stratify=cancer_labels, random_state=42)
+Non_cancer_Val, Non_cancer_test, Non_cancer_val_labels, Non_cancer_test_labels=train_test_split(Non_cancer_temp, Non_cancer_temp_labels, test_size=0.5, stratify=Non_cancer_temp_labels, random_state=42)
+Cancer_val, Cancer_test, Cancer_val_labels, Cancer_test_labels=train_test_split(Cancer_temp,Cancer_temp_labels, test_size=0.5, stratify=Cancer_temp_labels, random_state=42)
+
+training_data=np.concatenate((Non_cancer_train, Cancer_train), axis=0)
+training_labels=np.concatenate((Non_cancer_train_labels, Cancer_train_labels), axis=0)
+validation_data=np.concatenate((Non_cancer_Val,Cancer_val), axis=0)
+validation_labels=np.concatenate((Non_cancer_val_labels, Cancer_val_labels), axis=0)
+testing_data=np.concatenate((Non_cancer_test, Cancer_test), axis=0)
+testing_labels=np.concatenate((Non_cancer_test_labels, Cancer_test_labels), axis=0)
+
+training_labels=to_categorical(training_labels,2)
+validation_labels=to_categorical(validation_labels,2)
+testing_labels=to_categorical(testing_labels,2)
+
 # Model Creation
 model=keras.Sequential([
     layers.Conv2D(32,(3,3), padding='same', activation='relu', input_shape=(50,50,3)),
